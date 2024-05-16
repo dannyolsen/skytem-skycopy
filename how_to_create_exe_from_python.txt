@@ -1,0 +1,13 @@
+from anaconda terminal or python env for the given pyfile
+
+pip install pyinstaller
+
+pyinstaller --onefile myPyfile.py
+
+
+
+"""
+
+
+cd "C:\Users\dol\OneDrive - skytem.com\Documents\Github\SkyTEM_programs\python\copy_and_label"
+pyinstaller --onefile skycopy.py

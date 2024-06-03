@@ -3,10 +3,11 @@ import os.path, time
 import logging
 from logging import exception
 from pymediainfo import MediaInfo
+#from moviepy.editor import VideoFileClip
 import shutil
 from colorama import Fore, Style, Back
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import json
 
@@ -99,10 +100,14 @@ def get_sd_driveletter():
         return 'na'
 
 def get_folder_name_from_file(file):
+    # Open the file in read mode
+    with open("skycopy_settings.json", 'r') as json_file:
+        # Load the JSON data
+        data = json.load(json_file)
     date_string = (time.ctime(os.path.getmtime(file)))
     date_object = datetime.strptime(date_string, "%a %b %d %H:%M:%S %Y")
+    date_object += timedelta(hours=int(data['timedelta']))
     folder      = date_object.strftime("%Y%m%d")
-
     return folder
 
 def get_folder_name_from_DCIM(path):
@@ -375,7 +380,61 @@ def setup_video_lengths(path_settings, **data):
 
     return data
 
+def hours_offset_utc_local():
+    # Get the time in seconds since the epoch
+    current_time = time.time()
+    
+    # Get the struct_time for UTC
+    utc_time = time.gmtime(current_time)
+    
+    # Get the struct_time for local time
+    local_time = time.localtime(current_time)
+    
+    # Calculate the difference in hours
+    hours_offset = int((time.mktime(local_time) - time.mktime(utc_time)) / 3600)
+    
+    return hours_offset
+
+def longest_mov_duration(directory):
+    print(directory)
+    longest_duration = 0
+
+    # Iterate through all files in the directory
+    for filename in os.listdir(directory):
+        # Check if the file is a MOV file
+        if filename.lower().endswith(".mov") :
+            # Get the full path to the file
+            filepath = os.path.join(directory, filename)
+            
+            # Create a MediaInfo object for the file
+            media_info = MediaInfo.parse(filepath)
+            
+            # Get the duration of the video track in milliseconds
+            video_duration = 0
+            for track in media_info.tracks:
+                if track.track_type == 'Video':
+                    video_duration = track.duration
+                
+            # Convert duration to seconds
+            duration_seconds = video_duration / 1000
+            
+            # Update the longest duration if necessary
+            if duration_seconds > longest_duration:
+                longest_duration = duration_seconds
+       
+ 
+    # Convert the longest duration to hh:mm:ss format
+    hours = int(longest_duration / 3600)
+    minutes = int((longest_duration % 3600) / 60)
+    seconds = int(longest_duration % 60)
+    
+    return "{:02d}:{:02d}:{:02d}".format(hours, minutes, seconds)
+
 if __name__ == '__main__':
-    print(get_sd_driveletter())
+    #print(get_sd_driveletter())
+    # Test the function
+    print(hours_offset_utc_local())
+    directory_path = "C:\\Users\\dol\\Desktop\\AU10109 helivids\\20240519"
+    print(longest_mov_duration(directory_path))
 
 

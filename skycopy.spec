@@ -5,7 +5,7 @@ a = Analysis(
     ['skycopy.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('audio\\skycopy1.5.m4a', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

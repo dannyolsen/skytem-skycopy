@@ -16,7 +16,7 @@ print(text2art('SkyCopy'))
 print('-------------------------------------------------------------')
 print('Version 1.6 - 4th of June 2024 - Danny Olsen (dol@skytem.com)')
 print('-------------------------------------------------------------\n')
-print('This program will copy all helivideos to specified folder.\n')
+print('This program will copy all helivideos to folder where this file is beeing run from.\n')
 ##################################################################################################
 
 print("Updates:")

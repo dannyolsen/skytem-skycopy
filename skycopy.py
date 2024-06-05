@@ -14,7 +14,7 @@ from art import text2art
 ##################################################################################################
 print(text2art('SkyCopy'))
 print('-------------------------------------------------------------')
-print('Version 1.6 - 4th of June 2024 - Danny Olsen (dol@skytem.com)')
+print('Version 1.7 - 5th of June 2024 - Danny Olsen (dol@skytem.com)')
 print('-------------------------------------------------------------\n')
 print('This program will copy all helivideos to folder where this file is beeing run from.\n')
 ##################################################################################################
@@ -103,7 +103,7 @@ else:
     
     else:
         print("skycopy_settings.json not found")
-        print("Provide source and destination lib. This only has to be done once.")
+        #print("Provide source and destination lib. This only has to be done once.")
         print("After initial setup changes can be made in the skycopy_settings.json file\n")
 
         if functions.get_sd_driveletter() == 'na':
@@ -125,7 +125,8 @@ else:
 
         # Split the input string into hours, minutes, and seconds
         hours, minutes, seconds = map(int, time_str.split(':'))
-
+        print("VIDEOSPLIT TIME IS SET TO {}. This could be incorrectly set if a full productionflight has not been done - please verify in setting file if in doubt".format(time_str))
+        input(f"{Fore.YELLOW}PRESS ENTER TO CONTINUE{Fore.RESET}") 
 
         #print("Timedelta usually should be set to 0, but if the videos end up in the wrong folders you can use timedelta to compensate for this")
         timedelta = functions.hours_offset_utc_local()   #timedelta will add this amount of hours to the date modified end up in the right folder - this was an issue in AU 10109
@@ -177,5 +178,6 @@ functions.label_and_remove(data['destination_mov'], data)
 d = input("Do you want to delete the content of the SD card? (y/n): ")
 if d == 'y':
     functions.delete_sd(data['source_mov'])
+
 
 input(f"{Fore.GREEN}PRESS ENTER TO QUIT PROGRAM{Fore.RESET}")   #this is so the user has a chance to read the terminal info before the windows closes

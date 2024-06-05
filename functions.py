@@ -357,7 +357,7 @@ def setup_video_lengths(path_settings, **data):
         #pf = input('Label videos over x minutes as production_flights (recommended 30 mins): ')
 
         nf = 10
-        pf = 30
+        pf = 40
         print(f'Videos between {nf} and {pf} minutes will be labelled short_flights')
     
         data["no_flight"] = nf

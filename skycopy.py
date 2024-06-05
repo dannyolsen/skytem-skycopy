@@ -127,8 +127,9 @@ else:
         hours, minutes, seconds = map(int, time_str.split(':'))
 
 
-        print("Timedelta usually should be set to 0, but if the videos end up in the wrong folders you can use timedelta to compensate for this")
+        #print("Timedelta usually should be set to 0, but if the videos end up in the wrong folders you can use timedelta to compensate for this")
         timedelta = functions.hours_offset_utc_local()   #timedelta will add this amount of hours to the date modified end up in the right folder - this was an issue in AU 10109
+        #print("Timedelta set to : ", timedelta)
 
         data = {"source_mov"       : source_mov, 
                 "destination_mov"  : destination_mov,
